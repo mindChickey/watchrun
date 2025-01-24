@@ -12,7 +12,6 @@ class ProcessLine:
   
   def run_process(self, cmds):
     for cmd in cmds:
-      print("run", cmd)
       self.process = subprocess.Popen(cmd.split())
       status_code = self.process.wait()
       if status_code != 0: break
