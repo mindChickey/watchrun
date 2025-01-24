@@ -2,8 +2,8 @@
 
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
-from debounce import DebounceThread
-from process_line import ProcessLine
+from .debounce import DebounceThread
+from .process_line import ProcessLine
 
 class MyEventHandler(FileSystemEventHandler):
   def __init__(self, delay, terminate_callback, start_callback):
