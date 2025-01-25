@@ -7,7 +7,7 @@ from .debounce import DebounceThread
 from .process_line import ProcessLine
 
 def inDirs(dirs, dir):
-  d0 = path.relpath(dir)
+  d0 = path.abspath(dir)
 
   for d in dirs:
     if d == path.commonpath([d, d0]):
@@ -19,7 +19,7 @@ class MyEventHandler(FileSystemEventHandler):
     self.debounce = DebounceThread(delay)
     self.terminate_callback = terminate_callback
     self.start_callback = start_callback
-    self.ignore_dirs = [path.relpath(dir) for dir in ignore_dirs]
+    self.ignore_dirs = [path.abspath(dir) for dir in ignore_dirs]
 
   def on_created(self, event: FileSystemEvent) -> None:
     if inDirs(self.ignore_dirs, event.src_path): return
