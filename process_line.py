@@ -1,5 +1,6 @@
 
 import subprocess
+from os import path
 
 class ProcessLine:
   def __init__(self):
@@ -11,11 +12,11 @@ class ProcessLine:
       p.terminate()
   
   def run_process(self, cmds):
-    cwd = "."
+    cwd = path.curdir
     for cmd in cmds:
       args = cmd.split()
       if args[0] == "cd":
-        cwd = args[1]
+        cwd = path.join(cmd, args[1])
       else:
         self.process = subprocess.Popen(args, cwd=cwd)
         status_code = self.process.wait()

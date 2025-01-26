@@ -2,6 +2,9 @@
 import threading
 import time
 
+def stop1():
+  None
+
 class DebounceThread:
   def __init__(self, delay):
     self.delay = delay
@@ -13,7 +16,7 @@ class DebounceThread:
 
   def debounce(self):
     current_time = time.time()
-    while True:
+    while self.last_task != stop1:
       target_time0 = self.target_time
       diff = target_time0 - current_time
       if diff < 0:
@@ -33,3 +36,9 @@ class DebounceThread:
   
   def thread_join(self):
     self.thread.join()
+
+  def stop(self):
+    self.dispose(stop1)
+
+  def __del__(self):
+    self.dispose(stop1)
