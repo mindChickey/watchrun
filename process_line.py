@@ -1,5 +1,6 @@
 
 import subprocess
+import multiprocessing
 from os import path
 
 class ProcessLine:
@@ -14,10 +15,24 @@ class ProcessLine:
   def run_process(self, cmds):
     cwd = path.curdir
     for cmd in cmds:
-      args = cmd.split()
-      if args[0] == "cd":
-        cwd = path.join(cmd, args[1])
+      if isinstance(cmd, str):
+        args = cmd.split()
+        if args[0] == "cd":
+          cwd = path.join(cmd, args[1])
+        else:
+          self.process = subprocess.Popen(args, cwd=cwd)
+          status_code = self.process.wait()
+          if status_code != 0: break
+
+      elif callable(cmd):
+        p = multiprocessing.Process(target=cmd)
+        self.process = p
+        p.start()
+        p.join()
+        if p.exitcode == 0:
+          continue
+        else:
+          break
+      
       else:
-        self.process = subprocess.Popen(args, cwd=cwd)
-        status_code = self.process.wait()
-        if status_code != 0: break
+        raise "cmd type error"

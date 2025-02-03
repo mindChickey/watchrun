@@ -47,8 +47,9 @@ def watch_dir(path, delay, terminate_callback, start_callback, ignore_dirs=[]):
   except KeyboardInterrupt:
     observer.stop()
 
-def watch_dir_cmds(path, delay, cmds, ignore_dirs=[]):
+def watch_dir_cmds(path, delay, cmds, ignore_dirs=[], run_now=False):
   process_line = ProcessLine()
   terminate_callback = lambda: process_line.terminate_process()
   start_callback = lambda: process_line.run_process(cmds)
+  if run_now: start_callback()
   watch_dir(path, delay, terminate_callback, start_callback, ignore_dirs)
