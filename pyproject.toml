@@ -1,0 +1,16 @@
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "watchact"
+version = "1.0.2"
+description = "A watch and run tool base on watchdog"
+dependencies = [
+  "watchdog"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License"
+]
